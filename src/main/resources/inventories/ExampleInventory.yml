@@ -1,0 +1,18 @@
+global:
+  name: "Test Inventory"
+  size: 27
+items:
+  gold:
+    item: gold_ingot
+    name: Pikachu
+    amount: 10
+    sell: 200
+    buy: 300
+    position: 1
+  axe:
+    item: diamond
+    name: "Test ingot"
+    amount: 1
+    sell: 300
+    buy: 100
+    position: 2
