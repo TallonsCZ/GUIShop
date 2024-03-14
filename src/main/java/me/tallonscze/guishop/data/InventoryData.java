@@ -7,8 +7,10 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,9 +38,34 @@ public class InventoryData {
     public ItemData getItem(int slot){
         return items.get(slot);
     }
+
+    /*
+    public void saveInventoryToConfig(Inventory inv){
+        ItemStack[] items = inv.getStorageContents();
+        for (ItemStack item: items) {
+        }
+    }
+     */
+
+
+    public void addItemToInventory(ItemData item, int slot) throws IOException {
+        items.put(slot, item);
+        loadAllItemsToInventory();
+        String section = "items."+slot;
+        invConfig.createSection(section);
+        invConfig.set(section+ ".name", item.getName());
+        invConfig.set(section+ ".item", item.getTypeString());
+        invConfig.set(section+ ".sell", item.getSell());
+        invConfig.set(section+ ".buy", item.getBuy());
+        invConfig.set(section+ ".amount", item.getDisplayItem().getAmount());
+        invConfig.set(section+ ".position", slot);
+        invConfig.save(pathToInventory);
+    }
+
     private void loadAllItemsToInventory(){
         items.forEach((key, value) -> inventory.setItem(key, value.getDisplayItem()));
     }
+
 
     private void loadItemsToMap(){
         ConfigurationSection section = invConfig.getConfigurationSection("items");

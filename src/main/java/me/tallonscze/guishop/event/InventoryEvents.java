@@ -2,11 +2,13 @@ package me.tallonscze.guishop.event;
 
 import me.tallonscze.guishop.GUIShop;
 import me.tallonscze.guishop.data.InventoryData;
+import me.tallonscze.guishop.utility.VaultUtility;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -26,6 +28,11 @@ public class InventoryEvents implements Listener {
             return;
         }
         System.out.println(clickedInv);
+        if (event.getClick().isCreativeAction() && VaultUtility.getPermissions().playerHas(player, "guishop.admin.canedit")){
+            return;
+        } else if (event.getClick().isCreativeAction()) {
+            player.sendMessage(Component.text("You dont use shop while have Creative mode!"));
+        }
         if(clickedInv == null || !clickedInv.equals(data.getInventory())){
             return;
         }

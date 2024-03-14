@@ -1,6 +1,7 @@
 package me.tallonscze.guishop;
 
 import me.tallonscze.guishop.commands.openInventoryCommand;
+import me.tallonscze.guishop.commands.setItemToInventory;
 import me.tallonscze.guishop.event.InventoryEvents;
 import me.tallonscze.guishop.utility.ConfigUtility;
 import me.tallonscze.guishop.utility.InventoryUtils;
@@ -29,6 +30,7 @@ public final class GUIShop extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new InventoryEvents(), this);
 
         getCommand("openinv").setExecutor(new openInventoryCommand());
+        getCommand("setitem").setExecutor(new setItemToInventory());
 
 
         if (!setupEconomy() ) {
