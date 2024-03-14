@@ -1,7 +1,6 @@
 package me.tallonscze.guishop.event;
 
 import me.tallonscze.guishop.utility.VaultUtility;
-import net.kyori.adventure.text.Component;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
