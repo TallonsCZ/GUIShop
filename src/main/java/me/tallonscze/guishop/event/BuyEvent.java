@@ -1,5 +1,6 @@
 package me.tallonscze.guishop.event;
 
+import me.tallonscze.guishop.utility.DynamicPriceUtility;
 import me.tallonscze.guishop.utility.VaultUtility;
 import net.kyori.adventure.text.Component;
 import net.milkbowl.vault.economy.Economy;
@@ -20,7 +21,6 @@ public class BuyEvent extends Event {
         if(playerBalance < cost){
             this.succes = false;
             player.sendMessage(Component.text(notMoney));
-            return;
         }else{
             econ.withdrawPlayer(player, cost);
             this.succes = true;

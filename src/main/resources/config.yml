@@ -11,3 +11,9 @@ general:
     username: username
     password: passoword
     prefix: gshop_
+
+language:
+  lore:
+    - "Hello"
+    - "Yello"
+    - "Pedoooo"

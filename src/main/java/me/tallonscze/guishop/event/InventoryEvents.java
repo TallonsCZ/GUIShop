@@ -2,13 +2,14 @@ package me.tallonscze.guishop.event;
 
 import me.tallonscze.guishop.GUIShop;
 import me.tallonscze.guishop.data.InventoryData;
+import me.tallonscze.guishop.data.ItemData;
+import me.tallonscze.guishop.utility.DynamicPriceUtility;
 import me.tallonscze.guishop.utility.VaultUtility;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -20,6 +21,7 @@ public class InventoryEvents implements Listener {
         Player player = (Player) event.getWhoClicked();
         Inventory clickedInv = event.getClickedInventory();
         InventoryData data = GUIShop.invUtility.getInventory(clickedInv);
+
         if (data == null){
             return;
         }
@@ -27,6 +29,7 @@ public class InventoryEvents implements Listener {
         if (data.getItem(slot) == null) {
             return;
         }
+        ItemData iData = data.getItem(slot);
         System.out.println(clickedInv);
         if (event.getClick().isCreativeAction() && VaultUtility.getPermissions().playerHas(player, "guishop.admin.canedit")){
             return;
@@ -42,16 +45,23 @@ public class InventoryEvents implements Listener {
             BuyEvent buyEvent = new BuyEvent(player ,data.getItem(slot).getBuy());
             if(buyEvent.isSucces()){
                 player.getInventory().addItem(item);
+                iData.setBuyed(1);
+                data.setBuyed(iData.getBuyed(), slot);
             }
         } else if (event.getClick().isRightClick()) {
             if(player.getInventory().contains(material)){
                 SellEvent sellEvent = new SellEvent(player, data.getItem(slot).getSell());
+                iData.setSelled(1);
+                data.setSelled(iData.getSelled(), slot);
                 sell(player, material, 1);
             }else{
                 player.sendMessage(Component.text("[BurningCube] You dont have material in your inventory.."));
                 System.out.println(item + " " + player.getInventory().contains(item) + player.getInventory().getItem(0) + player.getInventory().getItem(1));
             }
+
         }
+        DynamicPriceUtility.checkValue(iData, clickedInv);
+        data.setItemToMap(iData, slot);
         event.setCancelled(true);
     }
 

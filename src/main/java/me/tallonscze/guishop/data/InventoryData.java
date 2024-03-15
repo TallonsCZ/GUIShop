@@ -50,7 +50,7 @@ public class InventoryData {
 
     public void addItemToInventory(ItemData item, int slot) throws IOException {
         items.put(slot, item);
-        loadAllItemsToInventory();
+        reloadAllItemsToInventory();
         String section = "items."+slot;
         invConfig.createSection(section);
         invConfig.set(section+ ".name", item.getName());
@@ -66,6 +66,24 @@ public class InventoryData {
         items.forEach((key, value) -> inventory.setItem(key, value.getDisplayItem()));
     }
 
+    public void reloadAllItemsToInventory(){
+        items.clear();
+        loadAllItemsToInventory();
+    }
+    public void setItemToMap(ItemData data, int slot){
+        items.put(slot, data);
+        loadAllItemsToInventory();
+    }
+
+    public void setSelled(int selled, int slot){
+        String section = "items."+slot;
+        invConfig.set(section+ ".selled", selled);
+    }
+
+    public void setBuyed(int buyed, int slot){
+        String section = "items."+slot;
+        invConfig.set(section+ ".buyed", buyed);
+    }
 
     private void loadItemsToMap(){
         ConfigurationSection section = invConfig.getConfigurationSection("items");
