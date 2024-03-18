@@ -22,7 +22,7 @@ public class setItemToInventory implements CommandExecutor {
         Inventory inv = GUIShop.invUtility.getInventory(args[0] + ".yml");
         InventoryData invD = GUIShop.invUtility.getInventory(inv);
         try {
-            invD.addItemToInventory(new ItemData("STONE", 1, "Name", 10, 20), 10);
+            invD.addItemToInventory(new ItemData("STONE", 1, "Name", 10, 20, 1, 1, 10), 10);
             GUIShop.INSTANCE.reload();
         } catch (IOException e) {
             throw new RuntimeException(e);

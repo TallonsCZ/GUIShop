@@ -12,6 +12,13 @@ general:
     password: passoword
     prefix: gshop_
 
+dynamic_economy:
+  #Precent to increase/decrease price for buy/sell items
+  increase_buy: 3
+  decrease_buy: 5
+  increase_sell: 3
+  decrease_sell: 4
+
 language:
   lore:
     - "Hello"

@@ -2,17 +2,19 @@ global:
   name: "Test Inventory"
   size: 27
 items:
-  gold:
+  '1':
     item: gold_ingot
     name: Pikachu
     amount: 10
+    to_change_price: 10
     sell: 200
     buy: 300
     position: 1
-  axe:
+  '2':
     item: diamond
     name: "Test ingot"
     amount: 1
+    to_change_price: 5
     sell: 300
     buy: 100
     position: 2

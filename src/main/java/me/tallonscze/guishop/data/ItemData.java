@@ -1,5 +1,6 @@
 package me.tallonscze.guishop.data;
 
+import me.tallonscze.guishop.GUIShop;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -18,6 +19,7 @@ public class ItemData {
     private ItemMeta iMeta;
     private final String name;
     private final Material material;
+    private final int toChangePrice;
 
     public ItemStack getItem() {
         return new ItemStack(material);
@@ -26,10 +28,13 @@ public class ItemData {
 
     private final ItemStack item;
     private final String type;
-    public ItemData(String sourceMaterial, int amount, String inputName, double buy, double sell){
+    public ItemData(String sourceMaterial, int amount, String inputName, double buy, double sell, int buyed, int selled, int toChangePrice){
         name = inputName.replace("&", "§");
         this.buy = buy;
+        this.toChangePrice = toChangePrice;
         this.sell = sell;
+        this.buyed = buyed;
+        this.selled = selled;
         type = sourceMaterial;
         material = Material.getMaterial(sourceMaterial);
         item = new ItemStack(material);
@@ -39,8 +44,7 @@ public class ItemData {
         setLore(itemMeta);
         iMeta = itemMeta;
         item.setItemMeta(itemMeta);
-        setBuyed(0);
-        setSelled(0);
+
     }
 
     private void setLore(ItemMeta data){
@@ -65,6 +69,10 @@ public class ItemData {
     }
 
     public void setSelled(int selled) {
+        if(selled == 0){
+            this.selled = 0;
+            return;
+        }
         this.selled = getSelled() + selled;
     }
     public String getName() {
@@ -76,7 +84,16 @@ public class ItemData {
     }
 
     public void setBuyed(int buyed) {
-        this.buyed = getBuyed() + buyed;
+        if(buyed == 0){
+            this.buyed = 0;
+        }else{
+            this.buyed = getBuyed() + buyed;
+        }
+
+    }
+
+    public int getToChangePrice() {
+        return toChangePrice;
     }
 
     public double getBuy() {

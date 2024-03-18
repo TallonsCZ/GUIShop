@@ -53,6 +53,7 @@ public class InventoryData {
         reloadAllItemsToInventory();
         String section = "items."+slot;
         invConfig.createSection(section);
+        invConfig.set(section+ ".to_change_price", item.getToChangePrice());
         invConfig.set(section+ ".name", item.getName());
         invConfig.set(section+ ".item", item.getTypeString());
         invConfig.set(section+ ".sell", item.getSell());
@@ -63,6 +64,7 @@ public class InventoryData {
     }
 
     private void loadAllItemsToInventory(){
+        inventory.clear();
         items.forEach((key, value) -> inventory.setItem(key, value.getDisplayItem()));
     }
 
@@ -75,14 +77,28 @@ public class InventoryData {
         loadAllItemsToInventory();
     }
 
-    public void setSelled(int selled, int slot){
+    public void setSell(double sell, int slot) throws IOException{
         String section = "items."+slot;
-        invConfig.set(section+ ".selled", selled);
+        invConfig.set(section+".sell", sell);
+        invConfig.save(pathToInventory);
     }
 
-    public void setBuyed(int buyed, int slot){
+    public void setBuy(double buy, int slot) throws IOException{
+        String section = "items."+slot;
+        invConfig.set(section+".buy", buy);
+        invConfig.save(pathToInventory);
+    }
+
+    public void setSelled(int selled, int slot) throws IOException {
+        String section = "items."+slot;
+        invConfig.set(section+ ".selled", selled);
+        invConfig.save(pathToInventory);
+    }
+
+    public void setBuyed(int buyed, int slot) throws IOException {
         String section = "items."+slot;
         invConfig.set(section+ ".buyed", buyed);
+        invConfig.save(pathToInventory);
     }
 
     private void loadItemsToMap(){
@@ -95,9 +111,12 @@ public class InventoryData {
                 if(Material.matchMaterial(item) == null){
                     return;
                 }
-                Double sell = itemData.getDouble("sell", 1);
-                Double buy = itemData.getDouble("buy", 1);
-                ItemData itemToInventory = new ItemData(item, itemData.getInt("amount"), name, buy, sell);
+                double sell = itemData.getDouble("sell", 1);
+                double buy = itemData.getDouble("buy", 1);
+                int buyed = itemData.getInt("buyed", 0);
+                int selled = itemData.getInt("selled", 0);
+                int toChangePrice = itemData.getInt("to_change_price", 1);
+                ItemData itemToInventory = new ItemData(item, itemData.getInt("amount"), name, buy, sell, buyed, selled, toChangePrice);
                 int slot = itemData.getInt("position", NULL);
                 if(slot != NULL){
                     items.put(slot, itemToInventory);

@@ -14,30 +14,28 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.IOException;
+
 public class InventoryEvents implements Listener {
 
     @EventHandler
-    private void onPlayerClickInventoryEvent(InventoryClickEvent event){
+    private void onPlayerClickInventoryEvent(InventoryClickEvent event) throws IOException {
         Player player = (Player) event.getWhoClicked();
         Inventory clickedInv = event.getClickedInventory();
         InventoryData data = GUIShop.invUtility.getInventory(clickedInv);
-
-        if (data == null){
+        if(data == null || clickedInv == null || !clickedInv.equals(data.getInventory())){
             return;
         }
+        event.setCancelled(true);
         int slot = event.getSlot();
         if (data.getItem(slot) == null) {
             return;
         }
         ItemData iData = data.getItem(slot);
-        System.out.println(clickedInv);
         if (event.getClick().isCreativeAction() && VaultUtility.getPermissions().playerHas(player, "guishop.admin.canedit")){
             return;
         } else if (event.getClick().isCreativeAction()) {
             player.sendMessage(Component.text("You dont use shop while have Creative mode!"));
-        }
-        if(clickedInv == null || !clickedInv.equals(data.getInventory())){
-            return;
         }
         ItemStack item = data.getItem(slot).getItem();
         Material material = item.getType();
@@ -56,13 +54,15 @@ public class InventoryEvents implements Listener {
                 sell(player, material, 1);
             }else{
                 player.sendMessage(Component.text("[BurningCube] You dont have material in your inventory.."));
-                System.out.println(item + " " + player.getInventory().contains(item) + player.getInventory().getItem(0) + player.getInventory().getItem(1));
             }
 
         }
-        DynamicPriceUtility.checkValue(iData, clickedInv);
-        data.setItemToMap(iData, slot);
-        event.setCancelled(true);
+        ItemData newData = DynamicPriceUtility.checkValue(iData, clickedInv, slot);
+        if(newData != null){
+            data.setItemToMap(newData, slot);
+            player.openInventory(clickedInv);
+        }
+
     }
 
     public void sell(Player player, Material item, int amount){
