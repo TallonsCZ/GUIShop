@@ -13,11 +13,15 @@ general:
     prefix: gshop_
 
 dynamic_economy:
+  #Seconds to control price
+  timer: 60
   #Precent to increase/decrease price for buy/sell items
   increase_buy: 3
   decrease_buy: 5
   increase_sell: 3
   decrease_sell: 4
+  #Precent from number of items to increase price
+  needs_percent: 50
 
 language:
   lore:

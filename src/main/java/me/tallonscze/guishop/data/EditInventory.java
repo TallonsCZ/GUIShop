@@ -1,6 +1,5 @@
 package me.tallonscze.guishop.data;
 
-import io.papermc.paper.event.player.ChatEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 

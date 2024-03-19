@@ -45,6 +45,8 @@ public class InventoryEvents implements Listener {
                 player.getInventory().addItem(item);
                 iData.setBuyed(1);
                 data.setBuyed(iData.getBuyed(), slot);
+                iData.setLastPeriodBuy(1);
+                data.setLastBuy(iData.getLastPeriodBuy(), slot);
             }
         } else if (event.getClick().isRightClick()) {
             if(player.getInventory().contains(material)){
@@ -52,6 +54,9 @@ public class InventoryEvents implements Listener {
                 iData.setSelled(1);
                 data.setSelled(iData.getSelled(), slot);
                 sell(player, material, 1);
+                iData.setLastPeriodSell(1);
+                data.setLastSell(iData.getLastPeriodSell(), slot);
+
             }else{
                 player.sendMessage(Component.text("[BurningCube] You dont have material in your inventory.."));
             }

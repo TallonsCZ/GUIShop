@@ -1,21 +1,22 @@
 package me.tallonscze.guishop.data;
 
-import me.tallonscze.guishop.GUIShop;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemData {
+
+    private int slot;
     private double buy;
     private double sell;
     private int selled;
     private int buyed;
-
+    private int lastPeriodSell;
+    private int lastPeriodBuy;
     private ItemMeta iMeta;
     private final String name;
     private final Material material;
@@ -28,7 +29,7 @@ public class ItemData {
 
     private final ItemStack item;
     private final String type;
-    public ItemData(String sourceMaterial, int amount, String inputName, double buy, double sell, int buyed, int selled, int toChangePrice){
+    public ItemData(String sourceMaterial, int amount, String inputName, double buy, double sell, int buyed, int selled, int toChangePrice, int slot){
         name = inputName.replace("&", "§");
         this.buy = buy;
         this.toChangePrice = toChangePrice;
@@ -110,6 +111,34 @@ public class ItemData {
 
     public void setSell(double sell) {
         this.sell = sell;
+    }
+
+    public int getLastPeriodSell() {
+        return lastPeriodSell;
+    }
+
+    public void setLastPeriodSell(int lastPeriodSell) {
+        if (lastPeriodSell == 0){
+            this.lastPeriodSell = 0;
+        }else{
+            this.lastPeriodSell = getLastPeriodSell() + lastPeriodSell;
+        }
+    }
+
+    public int getLastPeriodBuy() {
+        return lastPeriodBuy;
+    }
+
+    public void setLastPeriodBuy(int lastPeriodBuy) {
+        if (lastPeriodBuy == 0){
+            this.lastPeriodBuy = 0;
+        }else{
+            this.lastPeriodBuy = getLastPeriodBuy() + lastPeriodBuy;
+        }
+    }
+
+    public int getSlot() {
+        return slot;
     }
 
 }

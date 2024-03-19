@@ -36,6 +36,10 @@ public class InventoryUtils {
         return optionalInventoryData.orElse(null);
     }
 
+    public InventoryData[] getAllInventory(){
+        return inventories.values().toArray(new InventoryData[0]);
+    }
+
     public Inventory getInventory(String name){
         if(!inventories.containsKey(name)){
             return null;

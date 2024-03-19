@@ -7,7 +7,6 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +45,9 @@ public class InventoryData {
         }
     }
      */
-
+    public Map<Integer, ItemData> getAllItemData(){
+        return items;
+    }
 
     public void addItemToInventory(ItemData item, int slot) throws IOException {
         items.put(slot, item);
@@ -101,6 +102,18 @@ public class InventoryData {
         invConfig.save(pathToInventory);
     }
 
+    public void setLastBuy(int buy,int slot) throws IOException{
+        String section = "items."+slot;
+        invConfig.set(section+ ".last_buy", buy);
+        invConfig.save(pathToInventory);
+    }
+
+    public void setLastSell(int sell,int slot) throws IOException{
+        String section = "items."+slot;
+        invConfig.set(section+ ".last_sell", sell);
+        invConfig.save(pathToInventory);
+    }
+
     private void loadItemsToMap(){
         ConfigurationSection section = invConfig.getConfigurationSection("items");
         if(section != null){
@@ -116,7 +129,7 @@ public class InventoryData {
                 int buyed = itemData.getInt("buyed", 0);
                 int selled = itemData.getInt("selled", 0);
                 int toChangePrice = itemData.getInt("to_change_price", 1);
-                ItemData itemToInventory = new ItemData(item, itemData.getInt("amount"), name, buy, sell, buyed, selled, toChangePrice);
+                ItemData itemToInventory = new ItemData(item, itemData.getInt("amount"), name, buy, sell, buyed, selled, toChangePrice, Integer.parseInt(key));
                 int slot = itemData.getInt("position", NULL);
                 if(slot != NULL){
                     items.put(slot, itemToInventory);
