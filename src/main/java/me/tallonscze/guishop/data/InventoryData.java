@@ -70,7 +70,6 @@ public class InventoryData {
     }
 
     public void reloadAllItemsToInventory(){
-        items.clear();
         loadAllItemsToInventory();
     }
     public void setItemToMap(ItemData data, int slot){

@@ -44,30 +44,23 @@ public class InventoryEvents implements Listener {
             if(buyEvent.isSucces()){
                 player.getInventory().addItem(item);
                 iData.setBuyed(1);
-                data.setBuyed(iData.getBuyed(), slot);
                 iData.setLastPeriodBuy(1);
-                data.setLastBuy(iData.getLastPeriodBuy(), slot);
             }
         } else if (event.getClick().isRightClick()) {
             if(player.getInventory().contains(material)){
                 SellEvent sellEvent = new SellEvent(player, data.getItem(slot).getSell());
                 iData.setSelled(1);
-                data.setSelled(iData.getSelled(), slot);
                 sell(player, material, 1);
                 iData.setLastPeriodSell(1);
-                data.setLastSell(iData.getLastPeriodSell(), slot);
 
             }else{
                 player.sendMessage(Component.text("[BurningCube] You dont have material in your inventory.."));
             }
 
         }
-        ItemData newData = DynamicPriceUtility.checkValue(iData, clickedInv, slot);
-        if(newData != null){
-            data.setItemToMap(newData, slot);
-            player.openInventory(clickedInv);
-        }
-
+        DynamicPriceUtility.checkValue(iData, clickedInv, slot);
+        data.reloadAllItemsToInventory();
+        player.openInventory(clickedInv);
     }
 
     public void sell(Player player, Material item, int amount){

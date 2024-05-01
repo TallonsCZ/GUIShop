@@ -27,11 +27,12 @@ public class TimerEvent implements Listener {
         for (InventoryData iData: inventories) {
             iData.getAllItemData().forEach((key, value) -> {
                 try {
-                    iData.setItemToMap(DynamicPriceUtility.increaseValue(value, iData.getInventory(), key), key);
+                    DynamicPriceUtility.increaseValue(value, iData.getInventory(), key);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             });
+            iData.reloadAllItemsToInventory();
         }
     }
 }
