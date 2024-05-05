@@ -11,22 +11,29 @@ import java.util.Optional;
 
 public class InventoryUtils {
 
+    private final File pathToInventory = new File(GUIShop.INSTANCE.getDataFolder() + "/inventories");
     private Map<String, InventoryData> inventories = new HashMap<>();
 
     public InventoryUtils(){
-        File pathToInventory = new File(GUIShop.INSTANCE.getDataFolder() + "/inventories");
-        File[] allFiles = pathToInventory.listFiles();
-        if(allFiles == null){
+        int numberOfFiles;
+        if(getAllFiles() == null){
             createDefaultInventory();
-            allFiles = pathToInventory.listFiles();
+            numberOfFiles = 1;
+        }else{
+            numberOfFiles = getAllFiles().length;
         }
-        int numberOfFiles = allFiles.length;
+        File[] allFile = getAllFiles();
         for(int i = 0; i != numberOfFiles; i++){
-            InventoryData data = new InventoryData(allFiles[i].getName());
-            inventories.put(allFiles[i].getName(), data);
-            System.out.println("[BurningCube] Loaded Inventory: " + i+1 + "/" + numberOfFiles + " Debug log: name: " + allFiles[i].getName());
+            InventoryData data = new InventoryData(allFile[i].getName());
+            inventories.put(allFile[i].getName(), data);
+            System.out.println("[BurningCube] Loaded Inventory: " + i+1 + "/" + numberOfFiles + " Debug log: name: " + allFile[i].getName());
         }
     }
+
+    private File[] getAllFiles(){
+        return pathToInventory.listFiles();
+    }
+
     public InventoryData getInventory(Inventory inv){
         Optional<InventoryData> optionalInventoryData = inventories.values()
                 .stream()

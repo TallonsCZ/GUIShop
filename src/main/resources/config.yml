@@ -1,7 +1,7 @@
 #Configuration file for GUIShop Plugin
 #Do not change this number!
 #You may break this plugin!
-Config version: 1
+version: 1
 
 general:
   database:

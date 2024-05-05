@@ -45,6 +45,8 @@ public class InventoryEvents implements Listener {
                 player.getInventory().addItem(item);
                 iData.setBuyed(1);
                 iData.setLastPeriodBuy(1);
+                player.sendMessage(Component.text("[§4Burning§fCube] Koupil jsi " + material.name() + " za " + iData.getBuy()));
+                player.sendMessage("[§4Burning§fCube] Koupil jsi " + material.name() + " za " + iData.getBuy());
             }
         } else if (event.getClick().isRightClick()) {
             if(player.getInventory().contains(material)){
@@ -52,6 +54,7 @@ public class InventoryEvents implements Listener {
                 iData.setSelled(1);
                 sell(player, material, 1);
                 iData.setLastPeriodSell(1);
+                player.sendMessage(Component.text("[BurningCube] Prodal jsi " + material.name() + " za " + iData.getSell()));
 
             }else{
                 player.sendMessage(Component.text("[BurningCube] You dont have material in your inventory.."));

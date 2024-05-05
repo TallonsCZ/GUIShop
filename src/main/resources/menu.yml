@@ -1,0 +1,7 @@
+#Menu file for GUIShop Plugin
+#Do not change this number!
+#You may break this plugin!
+version: 1
+
+global:
+  name: "Shop menu"
