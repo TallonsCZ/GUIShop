@@ -3,6 +3,7 @@ package me.tallonscze.guishop.utility;
 import me.tallonscze.guishop.GUIShop;
 import me.tallonscze.guishop.data.InventoryData;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -41,7 +42,7 @@ public class MenuUtility {
             }
             ItemStack invItem = new ItemStack(icon);
             ItemMeta invMeta = invItem.getItemMeta();
-            invMeta.displayName(Component.text(invData.getName()));
+            invMeta.displayName(Component.text(invData.getName()).decoration(TextDecoration.ITALIC, false));
             invItem.setItemMeta(invMeta);
             inv.setItem(finalSlot+placed, invItem);
             inventories.put(finalSlot+placed, invData);
