@@ -1,7 +1,7 @@
 #Configuration file for GUIShop Plugin
 #Do not change this number!
 #You may break this plugin!
-version: 1
+version: 2
 
 general:
   database:
@@ -13,6 +13,8 @@ general:
     prefix: gshop_
 
 dynamic_economy:
+  #enabling dynamic pricing
+  enabled: true
   #Seconds to control price
   timer: 60
   #Precent to increase/decrease price for buy/sell items

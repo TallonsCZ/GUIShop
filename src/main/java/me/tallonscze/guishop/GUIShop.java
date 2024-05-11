@@ -28,7 +28,7 @@ public final class GUIShop extends JavaPlugin {
     private MenuUtility inventoryMenu;
     public InventoryUtils invUtility;
     public static GUIShop INSTANCE;
-    private final int version = 1;
+    private final int version = 2;
     private final int menuVersion = 1;
 
     @Override

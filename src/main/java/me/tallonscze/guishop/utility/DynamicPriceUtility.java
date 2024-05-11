@@ -8,8 +8,13 @@ import java.io.IOException;
 
 public class DynamicPriceUtility {
 
+    private static boolean isEnabled = ConfigUtility.getConfig().getBoolean("dynamic_economy.enabled", true);
+
     //Increase value
     public static void checkValue(ItemData iData, Inventory inventory, int slot) throws IOException {
+        if(!isEnabled){
+            return;
+        }
         int avargeBuy = iData.getBuyed()/iData.getToChangePrice();
         int avargeSell = iData.getSelled()/iData.getToChangePrice();
         if(avargeBuy >= 1){
@@ -24,6 +29,9 @@ public class DynamicPriceUtility {
     }
 
     public static void increaseValue(ItemData iData, Inventory inventory, int slot) throws IOException{
+        if(!isEnabled){
+            return;
+        }
         double percent = ConfigUtility.getConfig().getInt("dynamic_economy.needs_percent", 1)/100.0;
         long finalValue = Math.round(iData.getToChangePrice()*percent);
         if(iData.getLastPeriodBuy() <= finalValue && iData.getLastPeriodSell() <= finalValue){
