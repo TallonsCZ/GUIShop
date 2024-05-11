@@ -28,7 +28,7 @@ public class ItemData {
     public ItemData(String sourceMaterial, int amount, String inputName){
         name = inputName.replace("&", "§");
         type = sourceMaterial;
-        material = Material.getMaterial(sourceMaterial);
+        material = Material.getMaterial(sourceMaterial.toUpperCase());
         if(material == null){
             material = Material.STONE;
         }

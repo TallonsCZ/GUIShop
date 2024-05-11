@@ -12,7 +12,7 @@ public class ItemNavigationData {
     }
 
     private void createBackItem(){
-        backItem = new ItemData("diamond", 1, "Back to inventory");
+        backItem = new ItemData("diamond_axe", 1, "Back to inventory");
         backItem.setBack(true);
     }
 
