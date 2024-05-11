@@ -2,6 +2,7 @@ package me.tallonscze.guishop.data;
 
 import me.tallonscze.guishop.GUIShop;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -33,7 +34,7 @@ public class InventoryData {
         if(inventorySize != 54){
             inventorySize = inventorySize + 9;
         }
-        inventory = Bukkit.createInventory(null, inventorySize, Component.text(invConfig.getString("global.name", "not found..")));
+        inventory = Bukkit.createInventory(null, inventorySize, Component.text(invConfig.getString("global.name", "not found..")).decoration(TextDecoration.ITALIC, false));
         this.name = invConfig.getString("global.name", "not found...");
         this.icon = invConfig.getString("global.icon", "stone");
         loadItemsToMap();

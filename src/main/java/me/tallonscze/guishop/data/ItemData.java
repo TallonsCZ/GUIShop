@@ -1,6 +1,8 @@
 package me.tallonscze.guishop.data;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.Style;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -33,10 +35,12 @@ public class ItemData {
         item = new ItemStack(material);
         item.setAmount(amount);
         ItemMeta itemMeta = item.getItemMeta();
-        itemMeta.displayName(Component.text(name));
+        itemMeta.displayName(Component.text(name).decoration(TextDecoration.ITALIC, false));
         setLore(itemMeta);
         iMeta = itemMeta;
         item.setItemMeta(itemMeta);
+
+        //LegacyComponentSerializer.legacy('&').deserialize(msg);
     }
 
     public void setBack(boolean back) {
