@@ -27,14 +27,10 @@ public class DynamicPriceUtility {
         double percent = ConfigUtility.getConfig().getInt("dynamic_economy.needs_percent", 1)/100.0;
         long finalValue = Math.round(iData.getToChangePrice()*percent);
         if(iData.getLastPeriodBuy() <= finalValue && iData.getLastPeriodSell() <= finalValue){
-            System.out.println(iData.getBuy() + " " + iData.getSell());
-            System.out.println(iData.getBuy()-iData.getSell() + " " + iData.getBuy()*0.1);
             if(iData.getBuy()-iData.getSell() <= iData.getBuy()*0.1){
-                System.out.println("Succes");
                 increaseValueSell(iData, inventory, slot);
                 increaseValueBuy(iData, inventory, slot);
             }else {
-                System.out.println(iData.getLastPeriodBuy() + "   " + iData.getLastPeriodSell() + "   " + finalValue);
                 decreaseValueBuy(iData, inventory, slot);
                 increaseValueSell(iData, inventory, slot);
             }
