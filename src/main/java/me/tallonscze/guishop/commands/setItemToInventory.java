@@ -17,10 +17,10 @@ public class setItemToInventory implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(!(sender instanceof Player)){return true;}
         Player player = ((Player) sender).getPlayer();
-        Inventory inv = GUIShop.invUtility.getInventory(args[0] + ".yml");
-        InventoryData invD = GUIShop.invUtility.getInventory(inv);
+        Inventory inv = GUIShop.INSTANCE.invUtility.getInventory(args[0] + ".yml");
+        InventoryData invD = GUIShop.INSTANCE.invUtility.getInventory(inv);
         try {
-            invD.addItemToInventory(new ItemData("STONE", 1, "Name", 10, 20, 1, 1, 10, 10), 10);
+            invD.addItemToInventory(new ItemData("STONE", 1, "Name"), 10);
             GUIShop.INSTANCE.reload();
         } catch (IOException e) {
             throw new RuntimeException(e);

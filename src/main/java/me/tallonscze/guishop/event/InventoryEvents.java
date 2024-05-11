@@ -10,11 +10,13 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class InventoryEvents implements Listener {
 
@@ -22,7 +24,17 @@ public class InventoryEvents implements Listener {
     private void onPlayerClickInventoryEvent(InventoryClickEvent event) throws IOException {
         Player player = (Player) event.getWhoClicked();
         Inventory clickedInv = event.getClickedInventory();
-        InventoryData data = GUIShop.invUtility.getInventory(clickedInv);
+        InventoryData data = GUIShop.INSTANCE.invUtility.getInventory(clickedInv);
+        InventoryData[] dataInv = GUIShop.INSTANCE.invUtility.getAllInventory();
+        for (InventoryData dataInvAll : dataInv) {
+            if(event.getClickedInventory() == player.getInventory() && player.getOpenInventory().getTopInventory().equals(dataInvAll.getInventory())){
+                if(event.getClick() == ClickType.SHIFT_RIGHT || event.getClick() == ClickType.SHIFT_LEFT){
+                    event.setCancelled(true);
+                    break;
+                }
+                break;
+            }
+        }
         if(data == null || clickedInv == null || !clickedInv.equals(data.getInventory())){
             return;
         }
@@ -31,7 +43,14 @@ public class InventoryEvents implements Listener {
         if (data.getItem(slot) == null) {
             return;
         }
+
+
         ItemData iData = data.getItem(slot);
+        if(data.getItem(event.getSlot()).equals(GUIShop.INSTANCE.navData.getBackItem())){
+            player.closeInventory();
+            player.openInventory(GUIShop.INSTANCE.getMenu().getInv());
+            return;
+        }
         if (event.getClick().isCreativeAction() && VaultUtility.getPermissions().playerHas(player, "guishop.admin.canedit")){
             return;
         } else if (event.getClick().isCreativeAction()) {

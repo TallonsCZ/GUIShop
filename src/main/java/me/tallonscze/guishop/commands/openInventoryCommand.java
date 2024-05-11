@@ -13,7 +13,7 @@ public class openInventoryCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if(sender instanceof Player){
             Player player = ((Player) sender).getPlayer();
-            Inventory inv = GUIShop.invUtility.getInventory(args[0] + ".yml");
+            Inventory inv = GUIShop.INSTANCE.invUtility.getInventory(args[0] + ".yml");
             if(inv != null){
                 player.openInventory(inv);
             }else{

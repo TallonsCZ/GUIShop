@@ -7,6 +7,8 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,16 +18,24 @@ import java.util.Map;
 import static java.sql.Types.NULL;
 
 public class InventoryData {
+    private final String name;
+    private final String icon;
     private final Inventory inventory;
     private final File pathToInventory;
     private YamlConfiguration invConfig;
-
+    private int inventorySize;
     private Map<Integer, ItemData> items = new HashMap<>();
 
     public InventoryData(String name){
         pathToInventory = new File(GUIShop.INSTANCE.getDataFolder() + "/inventories/" + name);
         invConfig = YamlConfiguration.loadConfiguration(pathToInventory);
-        inventory = Bukkit.createInventory(null, invConfig.getInt("global.size", 27), Component.text(invConfig.getString("global.name", "not found..")));
+        inventorySize =  invConfig.getInt("global.size", 27);
+        if(inventorySize != 54){
+            inventorySize = inventorySize + 9;
+        }
+        inventory = Bukkit.createInventory(null, inventorySize, Component.text(invConfig.getString("global.name", "not found..")));
+        this.name = invConfig.getString("global.name", "not found...");
+        this.icon = invConfig.getString("global.icon", "stone");
         loadItemsToMap();
         loadAllItemsToInventory();
     }
@@ -113,6 +123,14 @@ public class InventoryData {
         invConfig.save(pathToInventory);
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
     private void loadItemsToMap(){
         ConfigurationSection section = invConfig.getConfigurationSection("items");
         if(section != null){
@@ -128,13 +146,20 @@ public class InventoryData {
                 int buyed = itemData.getInt("buyed", 0);
                 int selled = itemData.getInt("selled", 0);
                 int toChangePrice = itemData.getInt("to_change_price", 1);
-                ItemData itemToInventory = new ItemData(item, itemData.getInt("amount"), name, buy, sell, buyed, selled, toChangePrice, Integer.parseInt(key));
+                ItemData itemToInventory = new ItemData(item, itemData.getInt("amount"), name);
+                itemToInventory.setSell(sell);
+                itemToInventory.setBuy(buy);
+                itemToInventory.setBuyed(buyed);
+                itemToInventory.setSelled(selled);
+                itemToInventory.setToChangePrice(toChangePrice);
+                itemToInventory.setSlot(Integer.parseInt(key));
                 int slot = itemData.getInt("position", NULL);
                 if(slot != NULL){
                     items.put(slot, itemToInventory);
                 }
 
             }
+            items.put(inventorySize-9, GUIShop.INSTANCE.navData.getBackItem());
         }
     }
 }

@@ -12,18 +12,12 @@ public class DynamicPriceUtility {
     public static void checkValue(ItemData iData, Inventory inventory, int slot) throws IOException {
         int avargeBuy = iData.getBuyed()/iData.getToChangePrice();
         int avargeSell = iData.getSelled()/iData.getToChangePrice();
-        double inBuy = ConfigUtility.getConfig().getInt("dynamic_economy.increase_buy", 1)/100.0;
-        double inSell = ConfigUtility.getConfig().getInt("dynamic_economy.decrease_sell", 1)/100.0;
         if(avargeBuy >= 1){
-            //Increase buy price
-            iData.setBuy(Math.round((iData.getBuy() * (1 + (avargeBuy*inBuy)))*100.0)/100.0);
-            iData.setBuyed(0);
+            increaseValueBuy(iData, inventory, slot);
             inventory.close();
         }
         if (avargeSell >= 1) {
-            //Decrease sell price
-            iData.setSell(Math.round((iData.getSell() * (1 - (avargeSell*inSell)))*100.0)/100.0);
-            iData.setSelled(0);
+            decreaseValueSell(iData, inventory, slot);
             inventory.close();
         }
         iData.reloadLore();

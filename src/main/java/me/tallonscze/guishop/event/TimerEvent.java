@@ -23,7 +23,7 @@ public class TimerEvent implements Listener {
         }
         System.out.println("Increase pricis");
         TickCount = 0;
-        InventoryData[] inventories = GUIShop.invUtility.getAllInventory();
+        InventoryData[] inventories = GUIShop.INSTANCE.invUtility.getAllInventory();
         for (InventoryData iData: inventories) {
             iData.getAllItemData().forEach((key, value) -> {
                 try {

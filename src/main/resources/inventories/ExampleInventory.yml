@@ -1,5 +1,6 @@
 global:
   name: "Test Inventory"
+  icon: diamond
   size: 27
 items:
   '1':

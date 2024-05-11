@@ -2,17 +2,25 @@ package me.tallonscze.guishop.utility;
 
 import me.tallonscze.guishop.GUIShop;
 import me.tallonscze.guishop.data.InventoryData;
+import me.tallonscze.guishop.data.ItemData;
+import net.kyori.adventure.text.Component;
+import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 public class InventoryUtils {
 
     private final File pathToInventory = new File(GUIShop.INSTANCE.getDataFolder() + "/inventories");
     private Map<String, InventoryData> inventories = new HashMap<>();
+
+
 
     public InventoryUtils(){
         int numberOfFiles;
@@ -26,7 +34,8 @@ public class InventoryUtils {
         for(int i = 0; i != numberOfFiles; i++){
             InventoryData data = new InventoryData(allFile[i].getName());
             inventories.put(allFile[i].getName(), data);
-            System.out.println("[BurningCube] Loaded Inventory: " + i+1 + "/" + numberOfFiles + " Debug log: name: " + allFile[i].getName());
+            int help = i+1;
+            GUIShop.INSTANCE.getLogger().info("Loaded Inventory: " + help + "/" + numberOfFiles + " Debug log: name: " + allFile[i].getName());
         }
     }
 

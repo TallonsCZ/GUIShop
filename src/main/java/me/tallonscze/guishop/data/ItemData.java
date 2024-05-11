@@ -10,6 +10,8 @@ import java.util.List;
 
 public class ItemData {
 
+
+    private boolean isBack = false;
     private int slot;
     private double buy;
     private double sell;
@@ -19,8 +21,8 @@ public class ItemData {
     private int lastPeriodBuy;
     private ItemMeta iMeta;
     private final String name;
-    private final Material material;
-    private final int toChangePrice;
+    private Material material;
+    private int toChangePrice;
 
     public ItemStack getItem() {
         return new ItemStack(material);
@@ -29,15 +31,13 @@ public class ItemData {
 
     private final ItemStack item;
     private final String type;
-    public ItemData(String sourceMaterial, int amount, String inputName, double buy, double sell, int buyed, int selled, int toChangePrice, int slot){
+    public ItemData(String sourceMaterial, int amount, String inputName){
         name = inputName.replace("&", "§");
-        this.buy = buy;
-        this.toChangePrice = toChangePrice;
-        this.sell = sell;
-        this.buyed = buyed;
-        this.selled = selled;
         type = sourceMaterial;
         material = Material.getMaterial(sourceMaterial);
+        if(material == null){
+            material = Material.STONE;
+        }
         item = new ItemStack(material);
         item.setAmount(amount);
         ItemMeta itemMeta = item.getItemMeta();
@@ -48,6 +48,12 @@ public class ItemData {
 
     }
 
+    public void setSlot(int slot){
+        this.slot = slot;
+    }
+    public void setToChangePrice(int price){
+        this.toChangePrice = price;
+    }
     private void setLore(ItemMeta data){
         List<Component> list = new ArrayList<>();
         Component fLine = Component.text("Buy for: " + getBuy());
@@ -140,5 +146,11 @@ public class ItemData {
     public int getSlot() {
         return slot;
     }
+    public boolean isBack() {
+        return isBack;
+    }
 
+    public void setBack(boolean back) {
+        isBack = back;
+    }
 }
