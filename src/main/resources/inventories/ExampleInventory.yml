@@ -1,8 +1,15 @@
 global:
+  # Name of inventory
   name: "Test Inventory"
+
+  # Inventory icon in menu
   icon: diamond
+
+  # Size can be only 9/18/27/36/45
   size: 27
+
 items:
+  # Slots is counted from 0, maximal number for slots is 45
   '1':
     item: gold_ingot
     name: Pikachu
