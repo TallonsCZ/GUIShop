@@ -19,11 +19,9 @@ public class DynamicPriceUtility {
         int avargeSell = iData.getSelled()/iData.getToChangePrice();
         if(avargeBuy >= 1){
             increaseValueBuy(iData, inventory, slot);
-            inventory.close();
         }
         if (avargeSell >= 1) {
             decreaseValueSell(iData, inventory, slot);
-            inventory.close();
         }
         iData.reloadLore();
     }

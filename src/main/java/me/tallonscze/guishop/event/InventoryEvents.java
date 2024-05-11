@@ -82,7 +82,6 @@ public class InventoryEvents implements Listener {
         }
         DynamicPriceUtility.checkValue(iData, clickedInv, slot);
         data.reloadAllItemsToInventory();
-        player.openInventory(clickedInv);
     }
 
     public void sell(Player player, Material item, int amount){
