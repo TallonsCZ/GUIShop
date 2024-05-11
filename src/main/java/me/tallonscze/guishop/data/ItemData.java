@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemData {
-
-
     private boolean isBack = false;
     private int slot;
     private double buy;
@@ -23,12 +21,6 @@ public class ItemData {
     private final String name;
     private Material material;
     private int toChangePrice;
-
-    public ItemStack getItem() {
-        return new ItemStack(material);
-    }
-    public ItemStack getDisplayItem(){return this.item;}
-
     private final ItemStack item;
     private final String type;
     public ItemData(String sourceMaterial, int amount, String inputName){
@@ -45,16 +37,31 @@ public class ItemData {
         setLore(itemMeta);
         iMeta = itemMeta;
         item.setItemMeta(itemMeta);
-
     }
 
-    public void setSlot(int slot){
-        this.slot = slot;
-    }
-    public void setToChangePrice(int price){
-        this.toChangePrice = price;
+    public void setBack(boolean back) {
+        if(back){
+            ItemMeta meta = getiMeta();
+            if(meta.hasLore()){
+                List<Component> lore = meta.lore();
+                lore.clear();
+                meta.lore(lore);
+                setiMeta(meta);
+            }
+        }
+        isBack = back;
+
     }
     private void setLore(ItemMeta data){
+        if(isBack()){
+            if(data.hasLore()){
+                List<Component> lore = data.lore();
+                lore.clear();
+                data.lore(lore);
+                setiMeta(data);
+            }
+            return;
+        }
         List<Component> list = new ArrayList<>();
         Component fLine = Component.text("Buy for: " + getBuy());
         Component sLine = Component.text("Sell for: " + getSell());
@@ -96,7 +103,22 @@ public class ItemData {
         }else{
             this.buyed = getBuyed() + buyed;
         }
+    }
 
+    public void setLastPeriodBuy(int lastPeriodBuy) {
+        if (lastPeriodBuy == 0){
+            this.lastPeriodBuy = 0;
+        }else{
+            this.lastPeriodBuy = getLastPeriodBuy() + lastPeriodBuy;
+        }
+    }
+
+    public void setLastPeriodSell(int lastPeriodSell) {
+        if (lastPeriodSell == 0){
+            this.lastPeriodSell = 0;
+        }else{
+            this.lastPeriodSell = getLastPeriodSell() + lastPeriodSell;
+        }
     }
 
     public int getToChangePrice() {
@@ -123,34 +145,32 @@ public class ItemData {
         return lastPeriodSell;
     }
 
-    public void setLastPeriodSell(int lastPeriodSell) {
-        if (lastPeriodSell == 0){
-            this.lastPeriodSell = 0;
-        }else{
-            this.lastPeriodSell = getLastPeriodSell() + lastPeriodSell;
-        }
-    }
-
     public int getLastPeriodBuy() {
         return lastPeriodBuy;
     }
 
-    public void setLastPeriodBuy(int lastPeriodBuy) {
-        if (lastPeriodBuy == 0){
-            this.lastPeriodBuy = 0;
-        }else{
-            this.lastPeriodBuy = getLastPeriodBuy() + lastPeriodBuy;
-        }
+    private ItemMeta getiMeta(){
+        return item.getItemMeta();
     }
-
+    private void setiMeta(ItemMeta meta){
+        this.item.setItemMeta(meta);
+    }
     public int getSlot() {
         return slot;
     }
     public boolean isBack() {
         return isBack;
     }
-
-    public void setBack(boolean back) {
-        isBack = back;
+    public ItemStack getItem() {
+        return new ItemStack(material);
     }
+    public ItemStack getDisplayItem(){return this.item;}
+
+    public void setSlot(int slot){
+        this.slot = slot;
+    }
+    public void setToChangePrice(int price){
+        this.toChangePrice = price;
+    }
+
 }
