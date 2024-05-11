@@ -21,7 +21,7 @@ public class TimerEvent implements Listener {
         if(TickCount <= SaveInterval){
             return;
         }
-        System.out.println("Increase pricis");
+        GUIShop.INSTANCE.getLogger().info("Starting price update..");
         TickCount = 0;
         InventoryData[] inventories = GUIShop.INSTANCE.invUtility.getAllInventory();
         for (InventoryData iData: inventories) {
@@ -34,5 +34,6 @@ public class TimerEvent implements Listener {
             });
             iData.reloadAllItemsToInventory();
         }
+        GUIShop.INSTANCE.getLogger().info("Price update stoped..");
     }
 }
