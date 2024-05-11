@@ -31,10 +31,10 @@ public class InventoryData {
         pathToInventory = new File(GUIShop.INSTANCE.getDataFolder() + "/inventories/" + name);
         invConfig = YamlConfiguration.loadConfiguration(pathToInventory);
         inventorySize =  invConfig.getInt("global.size", 27);
-        if(inventorySize != 54){
-            inventorySize = inventorySize + 9;
+        if(inventorySize != 9 && inventorySize != 18 && inventorySize != 27 && inventorySize != 36 && inventorySize != 45){
+            inventorySize = 45;
         }
-        inventory = Bukkit.createInventory(null, inventorySize, Component.text(invConfig.getString("global.name", "not found..")).decoration(TextDecoration.ITALIC, false));
+        inventory = Bukkit.createInventory(null, inventorySize+9, Component.text(invConfig.getString("global.name", "not found..")).decoration(TextDecoration.ITALIC, false));
         this.name = invConfig.getString("global.name", "not found...");
         this.icon = invConfig.getString("global.icon", "stone");
         loadItemsToMap();
@@ -136,6 +136,9 @@ public class InventoryData {
         ConfigurationSection section = invConfig.getConfigurationSection("items");
         if(section != null){
             for(String key: section.getKeys(false)){
+                if(Integer.parseInt(key) >= inventorySize){
+                    return;
+                }
                 ConfigurationSection itemData = section.getConfigurationSection(key);
                 String name = itemData.getString("name", "none");
                 String item = itemData.getString("item", "stone").toUpperCase();
@@ -160,7 +163,7 @@ public class InventoryData {
                 }
 
             }
-            items.put(inventorySize-9, GUIShop.INSTANCE.navData.getBackItem());
+            items.put(inventorySize, GUIShop.INSTANCE.navData.getBackItem());
         }
     }
 }
