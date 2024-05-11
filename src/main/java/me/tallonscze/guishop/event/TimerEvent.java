@@ -21,8 +21,12 @@ public class TimerEvent implements Listener {
         if(TickCount <= SaveInterval){
             return;
         }
-        GUIShop.INSTANCE.getLogger().info("Starting price update..");
         TickCount = 0;
+        checkAllInventories();
+    }
+
+    public static void checkAllInventories() throws IOException{
+        GUIShop.INSTANCE.getLogger().info("Starting price update..");
         InventoryData[] inventories = GUIShop.INSTANCE.invUtility.getAllInventory();
         for (InventoryData iData: inventories) {
             iData.getAllItemData().forEach((key, value) -> {

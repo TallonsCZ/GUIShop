@@ -21,6 +21,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
+import java.io.IOException;
 
 public final class GUIShop extends JavaPlugin {
     private int numInv;
@@ -80,7 +81,11 @@ public final class GUIShop extends JavaPlugin {
             return;
         }
         setupPermissions();
-
+        try {
+            TimerEvent.checkAllInventories();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
