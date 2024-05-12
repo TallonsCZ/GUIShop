@@ -8,10 +8,7 @@ import me.tallonscze.guishop.data.ItemNavigationData;
 import me.tallonscze.guishop.event.InventoryEvents;
 import me.tallonscze.guishop.event.MenuEvent;
 import me.tallonscze.guishop.event.TimerEvent;
-import me.tallonscze.guishop.utility.ConfigUtility;
-import me.tallonscze.guishop.utility.InventoryUtils;
-import me.tallonscze.guishop.utility.MenuUtility;
-import me.tallonscze.guishop.utility.VaultUtility;
+import me.tallonscze.guishop.utility.*;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -27,51 +24,28 @@ public final class GUIShop extends JavaPlugin {
     private MenuUtility inventoryMenu;
     public InventoryUtils invUtility;
     public static GUIShop INSTANCE;
-    private final int version = 2;
-    private final int menuVersion = 1;
+
 
     @Override
     public void onEnable() {
         INSTANCE = this;
+        FileUtility fileUt = new FileUtility();
         navData = new ItemNavigationData();
-        if(!getDataFolder().exists()){
-            getDataFolder().mkdirs();
-        }
-
-        File menu = new File(getDataFolder(), "menu.yml");
-        if(!menu.exists()){
-            saveResource("menu.yml", true);
-            getLogger().info("Menu.yml created");
-        }else{
-            YamlConfiguration menuConf = YamlConfiguration.loadConfiguration(menu);
-            int menuLocalVersion = menuConf.getInt("version");
-            if(menuLocalVersion != menuVersion){
-                saveResource("menu.yml", true);
-                getLogger().info("Menu.yml created");
-            }
-        }
-
-        if(ConfigUtility.getConfig() == null){
-            saveResource("config.yml", true);
-            getLogger().info("Config.yml created");
-        } else if (ConfigUtility.getConfig().getInt("version", 0) != version) {
-            saveResource("config.yml", true);
-            getLogger().info("Config.yml replaced");
-        }
         invUtility = new InventoryUtils();
 
-        //create inventory
-        createMenu();
-
-
+        //Register Events
         getServer().getPluginManager().registerEvents(new MenuEvent(), this);
         getServer().getPluginManager().registerEvents(new InventoryEvents(), this);
         getServer().getPluginManager().registerEvents(new TimerEvent(), this);
 
+        //Register Commands
         getCommand("openinv").setExecutor(new openInventoryCommand());
         getCommand("setitem").setExecutor(new setItemToInventory());
         getCommand("menu").setExecutor(new openMenuCommand());
 
+
+        //create inventory
+        createMenu();
 
         if (!setupEconomy() ) {
             getLogger().severe(String.format("Disabled due to no Vault dependency found!", getDescription().getName()));
