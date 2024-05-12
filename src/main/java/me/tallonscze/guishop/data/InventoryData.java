@@ -88,39 +88,24 @@ public class InventoryData {
         loadAllItemsToInventory();
     }
 
-    public void setSell(double sell, int slot) throws IOException{
-        String section = "items."+slot;
-        invConfig.set(section+".sell", sell);
-        invConfig.save(pathToInventory);
+    public void saveInventoryToFile() throws IOException{
+        items.forEach((key, value) -> {
+            try {
+                saveItemToFile(value, key);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
-    public void setBuy(double buy, int slot) throws IOException{
+    public void saveItemToFile(ItemData data,int slot) throws IOException{
         String section = "items."+slot;
-        invConfig.set(section+".buy", buy);
-        invConfig.save(pathToInventory);
-    }
-
-    public void setSelled(int selled, int slot) throws IOException {
-        String section = "items."+slot;
-        invConfig.set(section+ ".selled", selled);
-        invConfig.save(pathToInventory);
-    }
-
-    public void setBuyed(int buyed, int slot) throws IOException {
-        String section = "items."+slot;
-        invConfig.set(section+ ".buyed", buyed);
-        invConfig.save(pathToInventory);
-    }
-
-    public void setLastBuy(int buy,int slot) throws IOException{
-        String section = "items."+slot;
-        invConfig.set(section+ ".last_buy", buy);
-        invConfig.save(pathToInventory);
-    }
-
-    public void setLastSell(int sell,int slot) throws IOException{
-        String section = "items."+slot;
-        invConfig.set(section+ ".last_sell", sell);
+        invConfig.set(section+".buy", data.getBuy());
+        invConfig.set(section+".sell", data.getSell());
+        invConfig.set(section+".selled", data.getSelled());
+        invConfig.set(section+".buyed", data.getBuyed());
+        invConfig.set(section+".last_buy", data.getLastPeriodBuy());
+        invConfig.set(section+".last_sell", data.getLastPeriodSell());
         invConfig.save(pathToInventory);
     }
 

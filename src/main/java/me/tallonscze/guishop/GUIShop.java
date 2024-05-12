@@ -90,7 +90,14 @@ public final class GUIShop extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
+        InventoryData[] inventories = GUIShop.INSTANCE.invUtility.getAllInventory();
+        for (InventoryData inv: inventories) {
+            try {
+                inv.saveInventoryToFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private void createMenu(){

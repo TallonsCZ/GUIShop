@@ -3,7 +3,6 @@ package me.tallonscze.guishop.event;
 import com.destroystokyo.paper.event.server.ServerTickEndEvent;
 import me.tallonscze.guishop.GUIShop;
 import me.tallonscze.guishop.data.InventoryData;
-import me.tallonscze.guishop.data.ItemData;
 import me.tallonscze.guishop.utility.ConfigUtility;
 import me.tallonscze.guishop.utility.DynamicPriceUtility;
 import org.bukkit.event.EventHandler;
@@ -23,6 +22,7 @@ public class TimerEvent implements Listener {
         }
         TickCount = 0;
         checkAllInventories();
+        saveAllInventories();
     }
 
     public static void checkAllInventories() throws IOException{
@@ -39,5 +39,16 @@ public class TimerEvent implements Listener {
             iData.reloadAllItemsToInventory();
         }
         GUIShop.INSTANCE.getLogger().info("Price update stoped..");
+    }
+
+    public void saveAllInventories(){
+        InventoryData[] inventories = GUIShop.INSTANCE.invUtility.getAllInventory();
+        for (InventoryData inv: inventories) {
+            try {
+                inv.saveInventoryToFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
