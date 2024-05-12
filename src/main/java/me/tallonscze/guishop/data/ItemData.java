@@ -38,8 +38,6 @@ public class ItemData {
         setLore(itemMeta);
         iMeta = itemMeta;
         item.setItemMeta(itemMeta);
-
-        //LegacyComponentSerializer.legacy('&').deserialize(msg);
     }
 
     public void setBack(boolean back) {

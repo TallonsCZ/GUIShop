@@ -32,6 +32,12 @@ public class FileUtility {
             }
         }
 
+        File lang = new File(dataFolder, "language.yml");
+        if(!lang.exists()){
+            GUIShop.INSTANCE.saveResource("language.yml", true);
+            GUIShop.INSTANCE.getLogger().info("Language.yml created");
+        }
+
 
         if(ConfigUtility.getConfig() == null){
             GUIShop.INSTANCE.saveResource("config.yml", true);

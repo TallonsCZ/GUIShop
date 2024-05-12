@@ -16,16 +16,16 @@ public class openMenuCommand implements CommandExecutor {
             Player player = ((Player) sender).getPlayer();
             Inventory menu = GUIShop.INSTANCE.getMenu().getInv();
             if(player == null){
-                System.out.println("Player is null");
+                GUIShop.INSTANCE.getLogger().warning("Player is null");
                 return true;
             } else if (menu == null) {
-                System.out.println("Menu is null");
+                GUIShop.INSTANCE.getLogger().warning("Menu is null");
                 return true;
             }
             player.openInventory(menu);
             return true;
         } else{
-            System.out.println("Command can be only execute by Player..");
+            GUIShop.INSTANCE.getLogger().warning("Command can be only execute by Player..");
             return true;
         }
     }

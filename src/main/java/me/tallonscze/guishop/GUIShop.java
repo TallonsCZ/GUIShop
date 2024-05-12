@@ -8,20 +8,22 @@ import me.tallonscze.guishop.data.ItemNavigationData;
 import me.tallonscze.guishop.event.InventoryEvents;
 import me.tallonscze.guishop.event.MenuEvent;
 import me.tallonscze.guishop.event.TimerEvent;
+import me.tallonscze.guishop.language.LanguageUtility;
+import me.tallonscze.guishop.language.Messages;
 import me.tallonscze.guishop.utility.*;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
 import java.io.IOException;
 
 public final class GUIShop extends JavaPlugin {
     private int numInv;
     public ItemNavigationData navData;
     private MenuUtility inventoryMenu;
+    private LanguageUtility languageUtility;
+    public Messages mess;
     public InventoryUtils invUtility;
     public static GUIShop INSTANCE;
 
@@ -32,6 +34,8 @@ public final class GUIShop extends JavaPlugin {
         FileUtility fileUt = new FileUtility();
         navData = new ItemNavigationData();
         invUtility = new InventoryUtils();
+        languageUtility = new LanguageUtility();
+        mess = new Messages();
 
         //Register Events
         getServer().getPluginManager().registerEvents(new MenuEvent(), this);
@@ -83,6 +87,9 @@ public final class GUIShop extends JavaPlugin {
 
     public MenuUtility getMenu(){
         return this.inventoryMenu;
+    }
+    public LanguageUtility getLanguage(){
+        return this.languageUtility;
     }
 
     private boolean setupEconomy() {
