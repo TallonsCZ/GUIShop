@@ -1,6 +1,5 @@
 package me.tallonscze.guishop.utility;
 
-import me.tallonscze.guishop.GUIShop;
 import me.tallonscze.guishop.data.ItemData;
 import org.bukkit.inventory.Inventory;
 

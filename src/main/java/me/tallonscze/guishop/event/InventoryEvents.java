@@ -16,7 +16,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 public class InventoryEvents implements Listener {
 

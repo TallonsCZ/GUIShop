@@ -1,7 +1,6 @@
 package me.tallonscze.guishop.commands;
 
 import me.tallonscze.guishop.GUIShop;
-import me.tallonscze.guishop.utility.MenuUtility;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

@@ -2,7 +2,6 @@ package me.tallonscze.guishop.event;
 
 import me.tallonscze.guishop.GUIShop;
 import me.tallonscze.guishop.data.InventoryData;
-import me.tallonscze.guishop.utility.MenuUtility;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

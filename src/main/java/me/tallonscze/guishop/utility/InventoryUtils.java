@@ -2,18 +2,12 @@ package me.tallonscze.guishop.utility;
 
 import me.tallonscze.guishop.GUIShop;
 import me.tallonscze.guishop.data.InventoryData;
-import me.tallonscze.guishop.data.ItemData;
-import net.kyori.adventure.text.Component;
-import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 public class InventoryUtils {
 
