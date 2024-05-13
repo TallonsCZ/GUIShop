@@ -3,6 +3,7 @@ package me.tallonscze.guishop.event;
 import me.tallonscze.guishop.GUIShop;
 import me.tallonscze.guishop.data.InventoryData;
 import me.tallonscze.guishop.data.ItemData;
+import me.tallonscze.guishop.language.Messages;
 import me.tallonscze.guishop.utility.DynamicPriceUtility;
 import me.tallonscze.guishop.utility.VaultUtility;
 import net.kyori.adventure.text.Component;
@@ -75,7 +76,7 @@ public class InventoryEvents implements Listener {
                 player.sendMessage(Component.text("[BurningCube] Prodal jsi " + material.name() + " za " + iData.getSell()));
 
             }else{
-                player.sendMessage(Component.text("[BurningCube] You dont have material in your inventory.."));
+                player.sendMessage(GUIShop.INSTANCE.mess.dont_have_resources);
             }
 
         }

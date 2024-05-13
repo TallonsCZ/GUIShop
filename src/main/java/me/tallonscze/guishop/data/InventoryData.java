@@ -17,6 +17,7 @@ import java.util.Map;
 import static java.sql.Types.NULL;
 
 public class InventoryData {
+    private final String fileName;
     private final String name;
     private final String icon;
     private final Inventory inventory;
@@ -27,6 +28,7 @@ public class InventoryData {
 
     public InventoryData(String name){
         pathToInventory = new File(GUIShop.INSTANCE.getDataFolder() + "/inventories/" + name);
+        this.fileName = name;
         invConfig = YamlConfiguration.loadConfiguration(pathToInventory);
         inventorySize =  invConfig.getInt("global.size", 27);
         if(inventorySize != 9 && inventorySize != 18 && inventorySize != 27 && inventorySize != 36 && inventorySize != 45){
@@ -151,5 +153,8 @@ public class InventoryData {
             }
             items.put(inventorySize, GUIShop.INSTANCE.navData.getBackItem());
         }
+    }
+    public String getFileName() {
+        return fileName;
     }
 }

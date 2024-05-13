@@ -31,4 +31,5 @@ public class openInventoryCommand implements CommandExecutor {
             return true;
         }
     }
+
 }

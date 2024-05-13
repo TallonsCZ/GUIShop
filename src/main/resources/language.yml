@@ -1,1 +1,4 @@
+prefix: "[&eGUIShop&f] "
 inventory_not_found: "Inventory not found.."
+not_enought_money: "&b You dont have enought money.."
+dont_have_resources: "You dont have item in your inventory.."

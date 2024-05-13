@@ -10,9 +10,11 @@ import me.tallonscze.guishop.event.MenuEvent;
 import me.tallonscze.guishop.event.TimerEvent;
 import me.tallonscze.guishop.language.LanguageUtility;
 import me.tallonscze.guishop.language.Messages;
+import me.tallonscze.guishop.tabPrediction.Inventories;
 import me.tallonscze.guishop.utility.*;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -46,6 +48,9 @@ public final class GUIShop extends JavaPlugin {
         getCommand("openinv").setExecutor(new openInventoryCommand());
         getCommand("setitem").setExecutor(new setItemToInventory());
         getCommand("menu").setExecutor(new openMenuCommand());
+
+        //Completer
+        getCommand("openinv").setTabCompleter(new Inventories());
 
 
         //create inventory
