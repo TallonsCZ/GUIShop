@@ -97,6 +97,9 @@ public class InventoryData {
     }
 
     public void saveItemToFile(ItemData data,int slot) throws IOException{
+        if(slot >= inventorySize){
+            return;
+        }
         String section = "items."+slot;
         invConfig.set(section+".buy", data.getBuy());
         invConfig.set(section+".sell", data.getSell());
@@ -120,7 +123,7 @@ public class InventoryData {
         if(section != null){
             for(String key: section.getKeys(false)){
                 if(Integer.parseInt(key) >= inventorySize){
-                    return;
+                    break;
                 }
                 ConfigurationSection itemData = section.getConfigurationSection(key);
                 String name = itemData.getString("name", "none");
